@@ -1,0 +1,139 @@
+.steps-header-mdl {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  color: #000;
+}
+
+.steps-header-mdl strong {
+  font-weight: 600;
+  padding-bottom: 15px;
+}
+.steps-header-mdl label {
+  font-weight: 600;
+  font-size: 18px;
+  color: #33383d;
+}
+.stp-scnd-control {
+  display: flex;
+  column-gap: 20px;
+  justify-content: center;
+  padding: 20px 0px;
+}
+.stp-scnd-control button {
+  padding: 10px 30px;
+  border-radius: 10px;
+  border: 1px solid #252f43;
+  font-weight: 600;
+}
+.stp-scndbtn1 {
+  background: #e0f1fe;
+}
+.xpt-bottom {
+  padding-top: 20px;
+}
+.labeled-input {
+  position: relative;
+}
+.labeled-input span {
+  position: absolute;
+  right: 10px;
+  bottom: 7px;
+  font-size: 14px;
+  color: #252f43;
+}
+.labeled-input input {
+  padding-right: 147px;
+}
+.list-cs-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.list-cs-item p {
+  margin-bottom: 0px;
+  font-size: 14px;
+  color: #33383d;
+  padding-bottom: 4px;
+}
+.bold-cap {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px !important;
+  color: #565555 !important;
+}
+.all-done {
+  display: flex;
+  flex-direction: column;
+}
+.all-done span img {
+  width: 40px;
+}
+.all-done strong {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.emr-button-clicked {
+  border: #009684 1px solid;
+  background: #009684 !important;
+  color: #ffffff !important;
+}
+
+.emr-button {
+  border: 1px solid #40454e !important;
+  background: #fff;
+  padding: 20px 40px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.btn-check:checked + .btn,
+:not(.btn-check) + .btn:active,
+.btn:first-child:active,
+.btn.active,
+.btn.show {
+  color: #000;
+  background-color: #e0f1fe;
+  border-color: #252f43;
+}
+
+.no-backdrop-modal {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.close {
+  background: #252f43;
+  color: #fff;
+}
+
+.already {
+  left: -291px;
+  position: relative;
+}
+
+.fields{
+  border: 1px solid #bfbfbf;
+  border-radius: 10px;
+  padding: 5px;
+  background: #e1e1e1;
+  margin-bottom: 6px;
+}
+
+.hdr{
+  background: white;
+  border-radius: 10px;
+}
+
+.posi{
+  top: 12px;
+  position: relative;
+}
+
+.fname-inp{
+  width: 290px;
+}
+
+.ftype-inp{
+  width: 210px;
+}

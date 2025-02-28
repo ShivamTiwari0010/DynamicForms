@@ -1,0 +1,34 @@
+<div id="app-sidepanel" class="app-sidepanel">
+  <div id="sidepanel-drop" class="sidepanel-drop"></div>
+  <div class="sidepanel-inner d-flex flex-column">
+    <div class="app-branding"> 
+      <div class="side-bar-logo-sec">
+        <!-- <img src="assets/images/logo.png" />  -->
+      </div>
+      <div class="side-bar-menu" (click)="toggleSideMenu()">
+        <i class="fa-solid fa-caret-left" title="Collapse"></i>        
+        <i class="fa-solid fa-caret-right" title="Expand"></i>
+      </div>
+    </div>
+    <nav class="app-nav app-nav-main flex-grow-1">
+      <ul class="navbar-dsboard" >
+        <li class="nav-item" routerLinkActive="active-nav">
+          <a class="nav-link" routerLink="/dashboard"  href="/dashboard">
+            <span class="nav-icon">
+              <img src="assets/icons/Dashboard.svg" alt="dash" title="Dashboard" />
+            </span>
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active-nav">
+          <a class="nav-link" routerLink="/forms-listing/listing"  href="/forms-listing/listing">
+            <span class="nav-icon">
+              <img src="assets/icons/user2.svg" alt="user" title="forms" />
+            </span>
+            <span class="nav-link-text">Forms</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

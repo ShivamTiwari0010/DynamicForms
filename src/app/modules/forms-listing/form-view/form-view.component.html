@@ -1,0 +1,133 @@
+<section class="prview-section">
+    <div class="p-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="cln-hd-left-fs">
+                                <h2>{{formName}}</h2>
+                                <h4>Steps: {{ formData.stepsCount }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">        
+                    <div class="d-flex align-items-center justify-content-end">
+                        <button class="btn btn-primary" (click)="addFormData()">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M10.9758 1.94817C10.9758 0.872224 10.1035 0 9.0276 0C7.95165 0 7.07943 0.872226 7.07943 1.94817V5.07957C7.07943 6.18414 6.184 7.07957 5.07943 7.07957L1.94817 7.07957C0.872227 7.07957 0 7.9518 0 9.02774C0 10.1037 0.872226 10.9759 1.94817 10.9759H5.07943C6.184 10.9759 7.07943 11.8713 7.07943 12.9759V16.0518C7.07943 17.1278 7.95165 18 9.0276 18C10.1035 18 10.9758 17.1278 10.9758 16.0518V12.9759C10.9758 11.8713 11.8712 10.9759 12.9758 10.9759H16.0518C17.1278 10.9759 18 10.1037 18 9.02774C18 7.9518 17.1278 7.07957 16.0518 7.07957L12.9758 7.07957C11.8712 7.07957 10.9758 6.18414 10.9758 5.07957V1.94817Z" fill="#F9FDFF"></path>
+                            </svg>
+                        </span>
+                        Add Data in Form
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+</section>
+
+<section class="strc-prview-section">
+    <div class="p-4">
+        <div class="container-fluid">
+            <h4 (click)="toggleCollapse()" class="collapsible-header">
+                View {{ formName }} form structure
+                <span style="top: -2px !important; position: relative;" [ngClass]="{'rotate-icon': isCollapsed}">
+                    ▼
+                </span>
+            </h4>
+            <div class="row" *ngIf="!isCollapsed">
+                <div class="col-md-12">
+                    <div *ngIf="formData?.stepFields?.length > 0; else noSteps">
+                        <div *ngFor="let step of formData.stepFields; let i = index; trackBy: trackByStep">
+                            <h5>Step {{ i + 1 }}: {{ step.stepName }}</h5>
+                            <ul>
+                                <li *ngFor="let field of step.fields; let j = index; trackBy: trackByField">
+                                    <strong>{{ field.label }}</strong>
+                                    <span *ngIf="field.required" class="text-danger">* </span> 
+                                    ({{ field.type }})
+                        
+                                    <span *ngIf="field.type === 'dropdown'">
+                                        - Options: {{ field.options }}
+                                    </span>
+                        
+                                    <span *ngIf="field.type === 'radio'">
+                                        - Options: {{ field.options }}
+                                    </span>
+                        
+                                    <span *ngIf="field.type === 'checkbox'">
+                                        - Options: {{ field.options }} 
+                                        ({{ field.selectionType === 'multi' ? 'Multi Select' : 'Single Select' }})
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    <ng-template #noSteps>
+                        <p class="text-muted">No steps available for this form.</p>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="main-right-white-block listing-block-height tbl-sct">
+    <div #scrollDiv class="scorbar-table" style="height: calc(59vh - 200px);">
+        <div class="custom-table-container">
+            <table *ngIf="formSubmissions.length > 0" class="no-border-table tbl-wid">
+                <thead class="capital-case thead-align-right-con thead-sticky" style="cursor: pointer;">
+                    <ng-container *ngFor="let header of headers; trackBy: trackHeader, let index = index">
+                        <th [ngClass]="{
+                            'th-width-0': index === 0,
+                            'th-width-1': index === 1,
+                            'th-width-2': index === 2}">
+                            <div class="act-cont">
+                                {{ header.label }}
+                            </div>
+                        </th>
+                      </ng-container>
+                </thead>
+        
+                <tbody>
+                  <tr *ngFor="let submission of formSubmissions; let i = index; trackBy: trackByIndex">
+                    <td>
+                        <div class="act-cont">
+                            {{ i + 1 }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="act-cont">
+                            {{ submission.date | date:'MMM dd, yyyy' }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="act-cont">
+                            <button class="btn btn-primary btn-sm" (click)="viewSubmission(i)">
+                                View
+                              </button>
+                              <button class="btn btn-danger btn-sm" (click)="confirmAndDelete(i)">Delete</button>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+    <div *ngIf="formSubmissions.length === 0">
+      <div class="empty-state__active">
+          <div class="empty-state__icon">
+              <img src="assets/icons/empty_item.svg" alt="empty"/>
+          </div>
+          <div class="empty-state__message">No records found</div>
+      </div>
+  </div>
+</section>
+
+
+

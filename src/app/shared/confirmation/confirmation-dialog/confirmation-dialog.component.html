@@ -1,0 +1,46 @@
+<div id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+
+<div class="modal-header hdr">
+    <h4 class="modal-title">{{data.title}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close('cancelled')"></button>
+</div>
+<div class="modal-body">
+    <p>{{data.message }}</p>
+</div>
+
+<div class="seprator-line"></div>
+
+<div class="modal-footer">
+        <!-- Actions -->
+        <ng-container >
+            <div
+                class="d-flex justify-content-end gap">
+    
+                <!-- Confirm -->
+                <ng-container *ngIf="data.actions?.confirm?.show">
+                    <button [ngClass]="data.actions?.confirm?.class || 'btn btn-default px-3'"  [style.color]="data.actions?.confirm?.color"
+                    (click)="activeModal.close('Confirmed')"
+                        >
+                        {{data.actions?.confirm?.label}}
+                    </button>
+                </ng-container>
+    
+                <ng-container *ngIf="data.actions?.showNext?.show">
+                    <button class="btn btn-primary px-3" (click)="activeModal.close('next')"
+                        [style.color]="data.actions?.showNext?.color" >
+                        {{data.actions?.showNext?.label}}
+                    </button>
+                </ng-container>
+    
+                <!-- Cancel -->
+                <ng-container *ngIf="data.actions?.cancel?.show">
+                    <button class="btn btn-primary px-4" (click)="activeModal.close('cancelled')" >
+                        {{data.actions?.cancel?.label}}
+                    </button>
+                </ng-container>
+            </div>
+        </ng-container>
+</div>
+
+</div>

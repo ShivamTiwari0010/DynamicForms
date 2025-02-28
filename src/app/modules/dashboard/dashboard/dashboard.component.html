@@ -1,0 +1,46 @@
+
+<div class="app-header-inner">
+    <div class="container-fluid ">
+        <div class="row justify-content-between align-items-center">
+          <div class="frame">
+              <div class="text-wrapper d-flex">Welcome, 
+                {{currentUser}}!
+            </div>
+              <div class="div">Dynamic forms Dashboard</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row pag-sm-scroll-container">
+        <div class="manual-scoll">
+            <div class="row">
+                <div class="col-md-3">        
+                    <div class="cl-3-fs-col">
+                        <div class="blue-bg bl-tp-widget">
+                            <label>
+                                <h3>{{totalForms()}}</h3>
+                                <p>Total Forms created</p>
+                            </label>
+                        </div>
+                    </div>
+        
+                    <div class="cl-3-fs-col-outer">        
+                        <div class="white-skin-block">
+                            <button class="green-btn-add" (click)="addNewForm()">
+                                <span><img src="assets/icons/plus-white.svg" alt="add" /> </span>
+                                <strong>Add New form</strong>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        
+        
+                <div class="col-md-9">                    
+                    <app-forms-listing [forms]="dashboard" [isFromDashboard]="true" (formDeleted)="loadStoredData()"></app-forms-listing>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

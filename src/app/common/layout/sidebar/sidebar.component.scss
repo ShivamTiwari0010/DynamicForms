@@ -1,0 +1,40 @@
+.navbar-dsboard {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.navbar-dsboard .nav-link {
+  display: block;
+  padding: 0.875rem 1rem;
+  color: #252930;
+  position: relative;
+  padding-left: 38px;
+  border-left: 3px solid rgba(0, 0, 0, 0);
+}
+
+.navbar-dsboard .nav-icon {
+  position: absolute;
+  left: 5px;
+  top: 15px;
+}
+
+.navbar-dsboard .nav-link .nav-link-text {
+  font-size: 16px;
+  color: var(--bluewhite);
+}
+
+.active-nav .nav-link {
+  background: var(--bluewhite);
+  border-radius: 10px;
+  color: var(--active-blue);
+}
+
+.active-nav .nav-link .nav-link-text {
+  color: #252f43;
+}
+
+.active-nav .nav-link .nav-icon img {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}

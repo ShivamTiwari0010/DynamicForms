@@ -1,0 +1,91 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <section class="main-right-white-block listing-block-height">
+                <div  class="d-flex justify-content-between page-header pb-md-4 pt-md-1">
+                    <h2 >{{isFromDashboard ? 'Created forms' : 'List of all the forms'}}</h2>
+                    <button *ngIf="!isFromDashboard" class="btn btn-primary" (click)="addNewForm()">
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"
+                                fill="none">
+                                <path
+                                    d="M10.9758 1.94817C10.9758 0.872224 10.1035 0 9.0276 0C7.95165 0 7.07943 0.872226 7.07943 1.94817V5.07957C7.07943 6.18414 6.184 7.07957 5.07943 7.07957L1.94817 7.07957C0.872227 7.07957 0 7.9518 0 9.02774C0 10.1037 0.872226 10.9759 1.94817 10.9759H5.07943C6.184 10.9759 7.07943 11.8713 7.07943 12.9759V16.0518C7.07943 17.1278 7.95165 18 9.0276 18C10.1035 18 10.9758 17.1278 10.9758 16.0518V12.9759C10.9758 11.8713 11.8712 10.9759 12.9758 10.9759H16.0518C17.1278 10.9759 18 10.1037 18 9.02774C18 7.9518 17.1278 7.07957 16.0518 7.07957L12.9758 7.07957C11.8712 7.07957 10.9758 6.18414 10.9758 5.07957V1.94817Z"
+                                    fill="#F9FDFF" />
+                            </svg></span> Add New Form
+                    </button>
+                    <button *ngIf="isFromDashboard"  class="vl-btn" [routerLink]="['/forms-listing/listing']" >SEE ALL</button>
+                </div>
+
+                <div class="search-control pb-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="search-block">
+                                <h2>{{totalRecords()}} Results</h2>
+                                <div class="search-element">
+                                    <span><img src="assets/icons/search.svg" alt="search"/></span>
+                                    <input placeholder="SEARCH" [(ngModel)]="reqData.FormName"
+                                      (ngModelChange)="searchForm()" 
+                                      type="text" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div #scrollDiv class="scorbar-table" style="height: calc(91vh - 200px);" >
+                    <div class="custom-table-container">
+                        <table *ngIf="filteredForms.length > 0" class="no-border-table tbl-wid">
+                            <thead class="capital-case thead-align-right-con thead-sticky" style="cursor: pointer;">
+                                <tr>
+                                  <ng-container *ngFor="let header of headers; trackBy: trackHeader, let index = index">
+                                    <th [ngClass]="{
+                                        'th-width-0': index === 0,
+                                        'th-width-1': index === 1,
+                                        'th-width-2': index === 2}">
+                                        <div class="act-cont">
+                                            {{ header.label }}
+                                        </div>
+                                    </th>
+                                  </ng-container>
+                                </tr>
+                              </thead>
+
+                            <tbody >
+                                <tr *ngFor="let form of filteredForms; trackBy: trackForm">
+                                  <td>
+                                    <div class="act-cont">
+                                      {{ form.formName }}
+                                    </div>
+                                  </td>
+                            
+                                  <td>
+                                    <div class="act-cont">
+                                      {{ form.stepsCount }}
+                                    </div>
+                                  </td>
+                            
+                                  <td>
+                                    <div class="act-cont">
+                                        <button class="btn btn-primary btn-sm" >
+                                          <a class="nav-link" [routerLink]="['/forms-listing/form-view',form.formName]" [href]="['/forms-listing/form-view',form.formName]">View</a>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" (click)="confirmAndDelete(form)">Delete</button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="filteredForms.length == 0" >
+                  <div class="empty-state__active">
+                      <div class="empty-state__icon">
+                          <img src="assets/icons/empty_item.svg" alt="empty" />
+                      </div>
+                      <div class="empty-state__message">No records found</div>
+                  </div>
+              </div>
+            </section>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,106 @@
+<div class="modal-header hdr">
+    <h5 class="modal-title">
+        {{ isView ? 'View Submission' : 'Add Data in ' + form.formName }}
+    </h5>
+    <button type="button" class="btn-close" (click)="isView ? close() : confirmAndClose() "></button>
+</div>
+
+<div class="modal-body">
+    <ng-container *ngIf="isView; else formContent">
+        <div class="view-mode">
+            <div *ngFor="let step of formGroup.get('stepFields')?.value; let i = index; trackBy: trackByStep">
+                <h5>Step {{ i + 1 }}: {{ step.stepName }}</h5>
+                <ul>
+                    <li *ngFor="let field of step.fields; let j = index; trackBy: trackByField">
+                        <strong>{{ field.label }}:</strong>
+                        <ng-container [ngSwitch]="field.type">
+                            <span *ngSwitchCase="'radio'">{{ field.value }}</span>
+                            <span *ngSwitchCase="'checkbox'">
+                                <ng-container *ngFor="let option of field.options?.split(','); let k = index; trackBy: trackByOption">
+                                    <span *ngIf="field.value.includes(option)">✔ {{ option }} </span>
+                                </ng-container>
+                            </span>
+                            <span *ngSwitchCase="'dropdown'">{{ field.value }}</span>
+                            <span *ngSwitchDefault>{{ field.value }}</span>
+                        </ng-container>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <div class="seprator-line"></div>
+
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary mt-3" (click)="editForm()">Edit</button>
+        </div>
+    </ng-container>
+
+    <ng-template #formContent>
+        <form [formGroup]="formGroup">
+            <div formArrayName="stepFields">
+                <div *ngFor="let step of stepFields.controls; let i = index; trackBy: trackByStep"
+                    [formGroupName]="i"
+                    [hidden]="stepNumber !== (i + 1)">
+                    
+                    <h5>Step {{ i + 1 }}: {{ step.get('stepName')?.value }}</h5>
+
+                    <div formArrayName="fields">
+                        <div *ngFor="let field of getFields(i).controls; let j = index; trackBy: trackByField"
+                            [formGroup]="getFieldGroup(i, j)">
+                            <label class="form-label">
+                                {{ field.get('label')?.value }}
+                                <span *ngIf="field.get('required')?.value" class="text-danger">*</span>
+                            </label>
+
+                            <input *ngIf="field.get('type')?.value === 'text'" type="text" class="form-control" formControlName="value" placeholder="text">
+                            <input *ngIf="field.get('type')?.value === 'email'" type="email" class="form-control" formControlName="value" placeholder="email">
+                            <input *ngIf="field.get('type')?.value === 'number'" type="number" class="form-control" formControlName="value" mask="9999999999" placeholder="number">
+                            <input *ngIf="field.get('type')?.value === 'date'" type="text" class="form-control" formControlName="value" placeholder="mm/dd/yyyy" mask="M0/d0/0000" (change)="updateDateValue(getFieldGroup(i, j))">
+
+                            <div *ngIf="field.get('type')?.value === 'radio'">
+                                <div *ngFor="let option of field.get('options')?.value.split(','); let k = index; trackBy: trackByOption">
+                                    <input type="radio" [value]="option" formControlName="value"> {{ option }}
+                                </div>
+                            </div>
+
+                            <div *ngIf="field.get('type')?.value === 'checkbox'">
+                                <ng-container *ngFor="let option of field.get('options')?.value.split(','); let k = index; trackBy: trackByOption">
+                                    <label class="me-2">
+                                        <input type="checkbox" 
+                                            [checked]="field.get('value')?.value?.includes(option)"
+                                            (change)="updateCheckboxSelection(field, option, $event)"> 
+                                        {{ option }}
+                                    </label>
+                                </ng-container>
+                            </div>
+
+                            <select *ngIf="field.get('type')?.value === 'dropdown'" class="form-select" formControlName="value">
+                                <option *ngFor="let option of field.get('options')?.value.split(','); let k = index; trackBy: trackByOption" [value]="option">
+                                    {{ option }}
+                                </option>
+                            </select>
+
+                            <div class="invalid-feedback d-block" 
+                                *ngIf="field.get('required')?.value && field.get('value')?.invalid && (field.get('value')?.touched || field.get('value')?.dirty)">
+                                This field is required.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </ng-template>
+    
+</div>
+
+<div *ngIf="!isView" class="seprator-line"></div>
+
+<div class="modal-footer" *ngIf="!isView">
+    <ng-container *ngIf="!isView">
+        <button class="btn btn-secondary" (click)="prevStep()" *ngIf="stepNumber > 1">Back</button>
+        <button class="btn btn-primary" (click)="nextStep()" *ngIf="stepNumber < stepFields.length">Next</button>
+        <button class="btn btn-success" (click)="saveForm()" *ngIf="stepNumber === stepFields.length" [disabled]="isSaveDisabled()" >Save</button>
+    </ng-container>
+</div>

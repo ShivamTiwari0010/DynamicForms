@@ -1,0 +1,156 @@
+<div class="modal-header hdr" *ngIf="stepNumber < 3">
+  <h5 class="modal-title">{{popupTitle()}}</h5>
+  <button *ngIf="stepNumber != 3" (click)="confirmAndClose()" type="button" class="btn-close" data-bs-dismiss="modal"
+      aria-label="Close"></button>
+  <button *ngIf="stepNumber == 3" (click)="close()" type="button" class="btn-close" data-bs-dismiss="modal"
+      aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="createNewForm">
+      <ng-container *ngIf="stepNumber === 1">
+          <div class="steps-header-mdl">
+              <strong>Step 1/2</strong>
+              <label>Define Form Details</label>
+          </div>
+
+          <div class="cst-form pt-2">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="mb-3">
+                          <label class="form-label">Form Name</label>
+                          <input type="text" placeholder="Enter Form Name" class="form-control"
+                              formControlName="formName">
+                          <div class="invalid-feedback" *ngIf="f['formName'].touched && f['formName'].invalid">
+                              This field is required.
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-12">
+                      <div class="mb-3">
+                          <label class="form-label">Number of Steps</label>
+                          <input type="number" placeholder="Enter Number of Steps" class="form-control"
+                              formControlName="stepsCount" min="1" mask="99">
+                          <div class="invalid-feedback" *ngIf="f['stepsCount'].touched && f['stepsCount'].invalid">
+                              Please enter a valid number of steps.
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="stepNumber === 2">
+          <div class="steps-header-mdl">
+              <strong>Step 2/2</strong>
+              <label>Define Steps and Fields</label>
+          </div>
+
+          <div class="cst-form">
+              <div formArrayName="stepFields">
+                  <div *ngFor="let step of stepFields.controls; let i = index" [formGroupName]="i">
+                      <h5>Step {{ i + 1 }}: {{ step.get('stepName')?.value }}</h5>
+
+                      <div class="mb-3">
+                          <label class="form-label">Step Name</label>
+                          <input type="text" class="form-control" formControlName="stepName">
+                          <div class="invalid-feedback" *ngIf="step.get('stepName')?.touched && step.get('stepName')?.invalid">
+                              Step name is required.
+                          </div>
+                      </div>
+
+                      <div formArrayName="fields">
+                          <div *ngFor="let field of getStepFields(i).controls; let j = index" [formGroupName]="j" class="fields">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="mb-3">
+                                    <label class="form-label">Field Name</label>
+                                    <input type="text" class="form-control fname-inp" formControlName="label">
+                                    <div class="invalid-feedback" *ngIf="field.get('label')?.touched && field.get('label')?.invalid">
+                                        Field name is required.
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Field Type</label>
+                                    <select class="form-select " formControlName="type" (change)="handleFieldTypeChange(i, j)">
+                                    <option *ngFor="let type of fieldTypes" [value]="type">{{ type }}</option>
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="field.get('type')?.touched && field.get('type')?.invalid">
+                                    Field type is required.
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 form-check posi">
+                                    <input type="checkbox" class="form-check-input" formControlName="required">
+                                    <label class="form-check-label">Required</label>
+                                </div>
+
+                                <button type="button" (click)="removeField(i, j)" class="btn btn-danger btn-sm m-1">Remove</button>
+                                </div>
+
+                                <div>
+                                    <div class="mb-3" *ngIf="field.get('type')?.value === 'dropdown'">
+                                        <label class="form-label">Dropdown Options (Comma Separated)</label>
+                                        <input type="text" class="form-control" formControlName="options">
+                                    </div>
+    
+                                    <div class="mb-3" *ngIf="field.get('type')?.value === 'radio'">
+                                        <label class="form-label">Radio Options (Comma Separated)</label>
+                                        <input type="text" class="form-control" formControlName="options">
+                                    </div>
+    
+                                    <div *ngIf="field.get('type')?.value === 'checkbox'">
+                                        <div class="mb-3">
+                                            <label class="form-label">Checkbox Options (Comma Separated)</label>
+                                            <input type="text" class="form-control" formControlName="options">
+                                        </div>
+    
+                                        <div class="mb-3">
+                                            <label class="form-label">Selection Type</label>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" [value]="'single'"
+                                                    formControlName="selectionType">
+                                                <label class="form-check-label">Single Select</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" [value]="'multi'"
+                                                    formControlName="selectionType">
+                                                <label class="form-check-label">Multi Select</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                          </div>
+                      </div>
+
+                      <div class="d-flex justify-content-end">
+                          <button type="button" (click)="addField(i)" class="btn btn-secondary btn-sm">Add Field</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="stepNumber === 3">
+          <div class="all-done-parent">
+              <div class="all-done">
+                  <span class="pb-2"><img src="assets/icons/checkbox-new.svg" alt="done" /></span>
+                  <strong>All done!</strong>
+              </div>
+              <div class="the-practice-administrator pt-4">
+                  Your form have been saved.
+              </div>
+          </div>
+      </ng-container>
+  </form>
+</div>
+
+<div class="seprator-line"></div>
+
+<div class="modal-footer">
+  <button *ngIf="stepNumber === 2" (click)="prevStep()" class="btn btn-grey">Back</button>
+  <button *ngIf="stepNumber === 1" [disabled]="!createNewForm.valid" (click)="nextStep()" class="btn btn-primary">Next</button>
+  <button *ngIf="stepNumber === 2" [disabled]="isSaveDisabled" (click)="saveFormConfig()" class="btn btn-success">Save Form</button>
+  <button *ngIf="stepNumber === 3" (click)="close()" class="btn btn-secondary">Done</button>
+</div>
