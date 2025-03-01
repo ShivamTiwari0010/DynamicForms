@@ -214,9 +214,10 @@ export class AddDataInFormComponent {
         field.get('required')?.value && field.get('value')?.invalid
     );
 
-    let atLeastOneFieldFilled = allFields.some(field => 
-        field.get('value')?.value?.trim()
-    );
+    let atLeastOneFieldFilled = allFields.some(field => {
+      const value = field.get('value')?.value;
+      return Array.isArray(value) ? value.length > 0 : (value?.trim() !== '');
+  });
 
     return mandatoryFieldsUnfilled || (!atLeastOneFieldFilled && !mandatoryFieldsUnfilled);
   }
