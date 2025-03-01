@@ -34,7 +34,7 @@ export const FormsTable = [
       width: '10%',
     },
     {
-      label: 'Data',
+      label: 'Data(step 1 - field 1)',
       filter: false,
       sortAsc: false,
       show: false,

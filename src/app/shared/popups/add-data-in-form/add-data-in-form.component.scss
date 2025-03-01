@@ -2,3 +2,48 @@
     background: white;
     border-radius: 10px;
 }
+
+.mrgn{
+    margin-top: 10px;
+}
+
+.text-auto-expand, .email-auto-expand {
+    overflow-y: hidden; 
+    resize: none; 
+    min-height: 40px; 
+    max-height: 200px; 
+}
+
+.char-count {
+    font-size: 12px;
+    color: gray;
+    position: absolute;
+    right: 4px;
+}
+
+.text-char-count {
+    bottom:-16px; 
+}
+
+.email-char-count {
+    bottom: -16px; 
+}
+
+.view-mode {
+    max-height: 400px; 
+    overflow-y: auto; 
+}
+
+.view-mode ul {
+    list-style-type: none; 
+    padding-left: 0; 
+}
+
+.view-mode li {
+    margin-bottom: 10px; 
+}
+
+.view-mode span {
+    white-space: pre-wrap; 
+    word-break: break-word; 
+}

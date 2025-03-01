@@ -66,6 +66,7 @@ export class FormViewComponent {
     modalRef.componentInstance.formName = this.formName;
     modalRef.result.then(() => {
       this.fetchFormSubmissions();
+      this.cdRef.detectChanges();
     }).catch(() => {});
   }
 

@@ -21,6 +21,7 @@ export class AddDataInFormComponent {
   formGroup!: FormGroup;
   stepNumber: number = 1;
   submissionIndex: number | null = null; 
+  charCounts: { [key: string]: number } = {};
 
   constructor(
     private readonly fb: FormBuilder,
@@ -103,6 +104,25 @@ export class AddDataInFormComponent {
   editForm(): void {
     this.isView = false;
     this.isEdit = true;
+
+    this.patchFormData();
+
+    setTimeout(() => {
+      this.stepFields.controls.forEach((step, stepIndex) => {
+          const fields = (step.get('fields') as FormArray).controls;
+          fields.forEach((field, fieldIndex) => {
+              const fieldType = field.get('type')?.value;
+              const textareaSelector = `textarea[data-index="${stepIndex}-${fieldIndex}"]`;
+
+              if (fieldType === 'text' || fieldType === 'email') {
+                  const textarea = document.querySelector(textareaSelector) as HTMLTextAreaElement;
+                  if (textarea) {
+                      this.adjustHeight(textarea, field as FormGroup, fieldType === 'text' ? 150 : 320);
+                  }
+              }
+          });
+      });
+    }, 100);
   }
 
   updateCheckboxSelection(field: any, option: string, event: Event): void {
@@ -213,4 +233,34 @@ export class AddDataInFormComponent {
     return option; 
   }
   
+  updateTextField(field: FormGroup, stepIndex: number, fieldIndex: number): void {
+    const key = `step-${stepIndex}-field-${fieldIndex}`; 
+    this.charCounts[key] = field.get('value')?.value?.length || 0;
+
+    const textarea = document.querySelector(`textarea[data-index="${stepIndex}-${fieldIndex}"]`) as HTMLTextAreaElement;
+    if (textarea) {
+        this.adjustHeight(textarea, field, 150);
+    }
+}
+
+updateEmailField(field: FormGroup, stepIndex: number, fieldIndex: number): void {
+    const key = `step-${stepIndex}-field-${fieldIndex}`; 
+    this.charCounts[key] = field.get('value')?.value?.length || 0;
+
+    const textarea = document.querySelector(`textarea[data-index="${stepIndex}-${fieldIndex}"]`) as HTMLTextAreaElement;
+    if (textarea) {
+        this.adjustHeight(textarea, field, 320);
+    }
+}
+
+private adjustHeight(textarea: HTMLTextAreaElement, field: FormGroup, maxLength: number): void {
+  textarea.style.height = "40px"; 
+  textarea.style.height = textarea.scrollHeight + "px"; 
+
+  let fieldValue = field.get('value')?.value || '';
+  if (fieldValue.length > maxLength) {
+      field.patchValue({ value: fieldValue.substring(0, maxLength) });
+  }
+}
+
 }

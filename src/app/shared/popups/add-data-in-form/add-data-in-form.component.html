@@ -26,7 +26,6 @@
                     </li>
                 </ul>
             </div>
-            
         </div>
 
         <div class="seprator-line"></div>
@@ -46,15 +45,41 @@
                     <h5>Step {{ i + 1 }}: {{ step.get('stepName')?.value }}</h5>
 
                     <div formArrayName="fields">
-                        <div *ngFor="let field of getFields(i).controls; let j = index; trackBy: trackByField"
+                        <div class="mrgn" *ngFor="let field of getFields(i).controls; let j = index; trackBy: trackByField"
                             [formGroup]="getFieldGroup(i, j)">
-                            <label class="form-label">
+                            <label class="form-label m-0">
                                 {{ field.get('label')?.value }}
                                 <span *ngIf="field.get('required')?.value" class="text-danger">*</span>
                             </label>
 
-                            <input *ngIf="field.get('type')?.value === 'text'" type="text" class="form-control" formControlName="value" placeholder="text">
-                            <input *ngIf="field.get('type')?.value === 'email'" type="email" class="form-control" formControlName="value" placeholder="email">
+                            <div class="position-relative">
+                                <textarea *ngIf="field.get('type')?.value === 'text'" 
+                                        class="form-control text-auto-expand"
+                                        formControlName="value"
+                                        maxlength="150"
+                                        [attr.data-index]="i + '-' + j"  
+                                        placeholder="Enter text (max 150 chars)"
+                                        (input)="updateTextField(getFieldGroup(i, j), i, j)">
+                                </textarea>
+                                <small class="char-count text-char-count" *ngIf="field.get('type')?.value === 'text'">
+                                    {{ charCounts['step-' + i + '-field-' + j] !== undefined ? (charCounts['step-' + i + '-field-' + j] + '/150') : '' }}
+                                </small>
+                            </div>
+
+                            <div class="position-relative">
+                                <textarea *ngIf="field.get('type')?.value === 'email'" 
+                                        class="form-control email-auto-expand"
+                                        formControlName="value"
+                                        maxlength="320"
+                                        [attr.data-index]="i + '-' + j"  
+                                        placeholder="Enter your email (max 320 chars)"
+                                        (input)="updateEmailField(getFieldGroup(i, j), i, j)">
+                                </textarea>
+                                <small class="char-count email-char-count" *ngIf="field.get('type')?.value === 'email'">
+                                    {{ charCounts['step-' + i + '-field-' + j] !== undefined ? (charCounts['step-' + i + '-field-' + j] + '/320') : '' }}
+                                </small>
+                            </div>
+                                                     
                             <input *ngIf="field.get('type')?.value === 'number'" type="number" class="form-control" formControlName="value" mask="9999999999" placeholder="number">
                             <input *ngIf="field.get('type')?.value === 'date'" type="text" class="form-control" formControlName="value" placeholder="mm/dd/yyyy" mask="M0/d0/0000" (change)="updateDateValue(getFieldGroup(i, j))">
 

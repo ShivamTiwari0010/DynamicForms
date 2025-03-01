@@ -108,3 +108,19 @@
   font-size: 25px;
   width: calc(100% - 110px);
 }
+
+.col-width-30 {
+  width: 30%;
+  min-width: 100%;
+  height: 50px;
+  min-height: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  vertical-align: top; 
+}
+
+.fit-text {
+  white-space: pre-wrap; 
+  word-break: break-word; 
+  display: block;
+}

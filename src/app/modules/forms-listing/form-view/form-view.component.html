@@ -102,9 +102,9 @@
                             {{ i + 1 }}
                         </div>
                     </td>
-                    <td>
-                        <div class="act-cont">
-                            {{ submission.stepFields?.[0]?.fields?.[0]?.value  }}                        
+                    <td class="col-width-30 fit-text">
+                        <div class="act-cont ">
+                            {{submission.stepFields?.[0]?.stepName + ' : ' + submission.stepFields?.[0]?.fields?.[0]?.label + ' ' + submission.stepFields?.[0]?.fields?.[0]?.value }}                        
                         </div>
                     </td>
                     <td>
@@ -116,8 +116,10 @@
                         <div class="act-cont">
                             <button class="btn btn-primary btn-sm" (click)="viewSubmission(i)">
                                 View
-                              </button>
-                              <button class="btn btn-danger btn-sm" (click)="confirmAndDelete(i)">Delete</button>
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="confirmAndDelete(i)">
+                                Delete
+                            </button>
                         </div>
                     </td>
                   </tr>
