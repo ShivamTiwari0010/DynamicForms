@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="mb-3 form-check posi">
-                                    <input type="checkbox" class="form-check-input" formControlName="required">
+                                    <input type="checkbox" class="form-check-input pointer" formControlName="required">
                                     <label class="form-check-label">Required</label>
                                 </div>
 
@@ -133,12 +133,11 @@
       </ng-container>
 
       <ng-container *ngIf="stepNumber === 3">
-          <div class="all-done-parent">
+          <div>
               <div class="all-done">
-                  <span class="pb-2"><img src="assets/icons/checkbox-new.svg" alt="done" /></span>
-                  <strong>All done!</strong>
+                  <span class="pb-2 gap"><img src="assets/icons/checkbox-new.svg" alt="done" /><strong> All done!</strong></span>
               </div>
-              <div class="the-practice-administrator pt-4">
+              <div class="pt-4">
                   Your form have been saved.
               </div>
           </div>
