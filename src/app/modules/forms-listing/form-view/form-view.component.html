@@ -86,7 +86,8 @@
                         <th [ngClass]="{
                             'th-width-0': index === 0,
                             'th-width-1': index === 1,
-                            'th-width-2': index === 2}">
+                            'th-width-2': index === 2,
+                            'th-width-3': index === 3}">
                             <div class="act-cont">
                                 {{ header.label }}
                             </div>
@@ -99,6 +100,11 @@
                     <td>
                         <div class="act-cont">
                             {{ i + 1 }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="act-cont">
+                            {{ submission.stepFields?.[0]?.fields?.[0]?.value  }}                        
                         </div>
                     </td>
                     <td>

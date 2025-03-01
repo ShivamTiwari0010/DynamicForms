@@ -34,6 +34,13 @@ export const FormsTable = [
       width: '10%',
     },
     {
+      label: 'Data',
+      filter: false,
+      sortAsc: false,
+      show: false,
+      name: '',
+    },
+    {
       label: 'Submission Date',
       filter: false,
       sortAsc: true,
