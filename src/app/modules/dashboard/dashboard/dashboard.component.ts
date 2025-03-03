@@ -32,7 +32,7 @@ export class DashboardComponent {
   }
 
   getUser(){
-    this.currentUser = sessionStorage?.getItem('currentUser') ?? '';
+    this.currentUser = localStorage?.getItem('currentUser') ?? '';
   }
 
   saveUser(){
@@ -86,7 +86,7 @@ export class DashboardComponent {
   }
 
   loadStoredData() {
-    const savedForms = sessionStorage.getItem('savedForms');
+    const savedForms = localStorage.getItem('savedForms');
     this.dashboard = savedForms ? JSON.parse(savedForms) : [];
     if (this.formsListing) {
       this.formsListing.loadStoredData();

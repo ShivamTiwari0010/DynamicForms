@@ -185,7 +185,7 @@ export class AddNewFormComponent {
 
   saveFormConfig() {
     const formConfig = this.createNewForm.value;
-    let savedForms = JSON.parse(sessionStorage.getItem('savedForms') ?? '[]');
+    let savedForms = JSON.parse(localStorage.getItem('savedForms') ?? '[]');
 
     const isDuplicate = savedForms.some((form: any) => form.formName.trim().toLowerCase() === formConfig.formName.trim().toLowerCase());
 
@@ -195,7 +195,7 @@ export class AddNewFormComponent {
     }
 
     savedForms.push(formConfig);
-    sessionStorage.setItem('savedForms', JSON.stringify(savedForms));
+    localStorage.setItem('savedForms', JSON.stringify(savedForms));
     
     this.stepNumber = 3;
     this.formAdded.emit();

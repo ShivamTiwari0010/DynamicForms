@@ -33,7 +33,7 @@ export class FormViewComponent {
   }
 
   fetchFormData(): void {
-    const savedForms = sessionStorage.getItem('savedForms');
+    const savedForms = localStorage.getItem('savedForms');
     if (savedForms) {
       const formsList = JSON.parse(savedForms);
       this.formData = formsList.find((form: any) => form.formName === this.formName) || {};
@@ -41,7 +41,7 @@ export class FormViewComponent {
   }
 
   fetchFormSubmissions(): void {
-    const savedSubmissions = sessionStorage.getItem('savedFormData');
+    const savedSubmissions = localStorage.getItem('savedFormData');
     if (savedSubmissions) {
       const allSubmissions = JSON.parse(savedSubmissions);
       if (this.formName) {  
@@ -112,7 +112,7 @@ export class FormViewComponent {
 
   deleteFormData(index: any) {
     if (this.formName) {
-      const savedSubmissions = sessionStorage.getItem('savedFormData');
+      const savedSubmissions = localStorage.getItem('savedFormData');
       
       if (savedSubmissions) {
         let allSubmissions = JSON.parse(savedSubmissions);
@@ -120,7 +120,7 @@ export class FormViewComponent {
         if (allSubmissions[this.formName]) {
           allSubmissions[this.formName].splice(index, 1); 
   
-          sessionStorage.setItem('savedFormData', JSON.stringify(allSubmissions));
+          localStorage.setItem('savedFormData', JSON.stringify(allSubmissions));
   
           this.fetchFormSubmissions();
           this.cdRef.detectChanges();

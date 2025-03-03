@@ -10,7 +10,7 @@ export class FormStateService {
   constructor() {}
 
   private getSavedFormData(): { [key: string]: any[] } {
-    const savedData = sessionStorage.getItem('savedFormData');
+    const savedData = localStorage.getItem('savedFormData');
     return savedData ? JSON.parse(savedData) : {};
   }
 
@@ -31,7 +31,7 @@ export class FormStateService {
         savedForms[formName].push({ ...formData, date: new Date().toISOString() });
     }
     
-    sessionStorage.setItem('savedFormData', JSON.stringify(savedForms));
+    localStorage.setItem('savedFormData', JSON.stringify(savedForms));
     this.formSubmissions.next(savedForms);
 }
 

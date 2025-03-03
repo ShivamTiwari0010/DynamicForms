@@ -36,7 +36,7 @@ export class FormsListingComponent {
   }
 
   public loadStoredData() {
-    const savedForms = sessionStorage.getItem('savedForms');
+    const savedForms = localStorage.getItem('savedForms');
     this.formListingData = savedForms ? JSON.parse(savedForms) : [];
     this.filteredForms = [...this.formListingData];
   }
@@ -87,13 +87,13 @@ export class FormsListingComponent {
 
   deleteForm(form: any) {
     this.formListingData = this.formListingData.filter((f: { formName: string }) => f.formName !== form.formName);
-    sessionStorage.setItem('savedForms', JSON.stringify(this.formListingData));
+    localStorage.setItem('savedForms', JSON.stringify(this.formListingData));
 
-    const savedSubmissions = sessionStorage.getItem('savedFormData');
+    const savedSubmissions = localStorage.getItem('savedFormData');
     if (savedSubmissions) {
         let allSubmissions = JSON.parse(savedSubmissions);
         delete allSubmissions[form.formName]; 
-        sessionStorage.setItem('savedFormData', JSON.stringify(allSubmissions));
+        localStorage.setItem('savedFormData', JSON.stringify(allSubmissions));
     }
 
     this.loadStoredData();

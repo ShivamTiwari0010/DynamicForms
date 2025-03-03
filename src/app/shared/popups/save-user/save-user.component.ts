@@ -30,7 +30,7 @@ export class SaveUserComponent {
   saveUserName() {
     if (this.saveUser.valid) {
       const userName = this.saveUser.value.userName.trim();
-      sessionStorage.setItem('currentUser', userName);
+      localStorage.setItem('currentUser', userName);
       this.activeModal.close();
     } else {
       this.saveUser.markAllAsTouched(); 
