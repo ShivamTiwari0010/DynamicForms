@@ -32,9 +32,9 @@
                 </div>
 
 
-                <div #scrollDiv class="scorbar-table" [ngClass]="isFromDashboard ? 'tbl-hei-dash' : 'tbl-hei-comp'">
+                <div #scrollDiv class="scorbar-table" [ngClass]="isFromDashboard ? 'tbl-hei-dash' : 'tbl-hei-comp'" *ngIf="filteredForms.length > 0">
                     <div class="custom-table-container">
-                        <table *ngIf="filteredForms.length > 0" class="no-border-table tbl-wid">
+                        <table  class="no-border-table tbl-wid">
                             <thead class="capital-case thead-align-right-con thead-sticky" style="cursor: pointer;">
                                 <tr>
                                   <ng-container *ngFor="let header of headers; trackBy: trackHeader, let index = index">
@@ -84,7 +84,7 @@
                       </div>
                       <div class="empty-state__message">No records found</div>
                   </div>
-              </div>
+                </div>
             </section>
         </div>
     </div>

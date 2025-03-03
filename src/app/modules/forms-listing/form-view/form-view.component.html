@@ -77,10 +77,10 @@
 </section>
 
 
-<section class="main-right-white-block listing-block-height tbl-sct" style="    height: calc(72vh - 20px);">
-    <div #scrollDiv class="scorbar-table" style="height: calc(92vh - 200px);">
+<section class="main-right-white-block listing-block-height tbl-sct" style="height: calc(72vh - 20px);">
+    <div #scrollDiv class="scorbar-table" style="height: calc(92vh - 200px);" *ngIf="formSubmissions.length > 0">
         <div class="custom-table-container">
-            <table *ngIf="formSubmissions.length > 0" class="no-border-table tbl-wid">
+            <table class="no-border-table tbl-wid">
                 <thead class="capital-case thead-align-right-con thead-sticky" style="cursor: pointer;">
                     <ng-container *ngFor="let header of headers; trackBy: trackHeader, let index = index">
                         <th [ngClass]="{
