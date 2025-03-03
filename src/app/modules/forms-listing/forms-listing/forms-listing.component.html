@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <section class="main-right-white-block listing-block-height">
+            <section class="main-right-white-block" [ngClass]="isFromDashboard ? 'listing-block-height-dash' : 'listing-block-height-comp'">
                 <div  class="d-flex justify-content-between page-header pb-md-4 pt-md-1">
                     <h2 >{{isFromDashboard ? 'Created forms' : 'List of all the forms'}}</h2>
                     <button *ngIf="!isFromDashboard" class="btn btn-primary" (click)="addNewForm()">
@@ -32,7 +32,7 @@
                 </div>
 
 
-                <div #scrollDiv class="scorbar-table" style="height: calc(91vh - 200px);" >
+                <div #scrollDiv class="scorbar-table" [ngClass]="isFromDashboard ? 'tbl-hei-dash' : 'tbl-hei-comp'">
                     <div class="custom-table-container">
                         <table *ngIf="filteredForms.length > 0" class="no-border-table tbl-wid">
                             <thead class="capital-case thead-align-right-con thead-sticky" style="cursor: pointer;">
